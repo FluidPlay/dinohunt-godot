@@ -1,0 +1,143 @@
+[gd_scene load_steps=15 format=3 uid="uid://ce4qu0mcf5j83"]
+
+[ext_resource type="Texture2D" uid="uid://clqw6p4x5ss8" path="res://Textures/dino-game-bg.png" id="1_0nu2a"]
+[ext_resource type="Script" path="res://GameScenes/dino.gd" id="1_vgc7o"]
+[ext_resource type="Texture2D" uid="uid://bo1jlpkt8sn54" path="res://Textures/dino-atlas.png" id="2_qoh8m"]
+[ext_resource type="PackedScene" uid="uid://dyfy61vnvbpf5" path="res://ObjectScenes/car.tscn" id="4_k8c7d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3yf7k"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a1vgq"]
+atlas = ExtResource("2_qoh8m")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fxhmb"]
+atlas = ExtResource("2_qoh8m")
+region = Rect2(25, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5tmnr"]
+atlas = ExtResource("2_qoh8m")
+region = Rect2(50, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ja6jp"]
+atlas = ExtResource("2_qoh8m")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_46ckx"]
+atlas = ExtResource("2_qoh8m")
+region = Rect2(25, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enusd"]
+atlas = ExtResource("2_qoh8m")
+region = Rect2(50, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j2kcr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a1vgq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fxhmb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5tmnr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ja6jp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_46ckx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_enusd")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_soua5"]
+size = Vector2(32, 120)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aqqvd"]
+size = Vector2(160, 30)
+
+[node name="Root" type="Node2D"]
+
+[node name="Dino_Root" type="CharacterBody2D" parent="."]
+position = Vector2(24, 55)
+collision_mask = 8
+script = ExtResource("1_vgc7o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dino_Root"]
+shape = SubResource("RectangleShape2D_3yf7k")
+
+[node name="Dino" type="AnimatedSprite2D" parent="Dino_Root"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_j2kcr")
+animation = &"walk"
+autoplay = "walk"
+frame = 3
+frame_progress = 0.381362
+
+[node name="BG_root" type="Node2D" parent="."]
+
+[node name="Parallax2D" type="Parallax2D" parent="BG_root"]
+repeat_size = Vector2(160, 0)
+autoscroll = Vector2(-30, 0)
+repeat_times = 2
+ignore_camera_scroll = true
+
+[node name="BG" type="Sprite2D" parent="BG_root/Parallax2D"]
+z_index = -1
+texture_filter = 1
+position = Vector2(80, 60)
+texture = ExtResource("1_0nu2a")
+
+[node name="Limits" type="Node2D" parent="."]
+visible = false
+
+[node name="LeftBorder" type="Node2D" parent="Limits"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Limits/LeftBorder"]
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limits/LeftBorder/StaticBody2D"]
+position = Vector2(-8, 60)
+shape = SubResource("RectangleShape2D_soua5")
+
+[node name="RightBorder" type="Node2D" parent="Limits"]
+position = Vector2(177, 0)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Limits/RightBorder"]
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limits/RightBorder/StaticBody2D"]
+position = Vector2(-8, 60)
+shape = SubResource("RectangleShape2D_soua5")
+
+[node name="TopBorder" type="Node2D" parent="Limits"]
+position = Vector2(82, -17)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Limits/TopBorder"]
+position = Vector2(0, 15)
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limits/TopBorder/StaticBody2D"]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_aqqvd")
+
+[node name="BottomBorder" type="Node2D" parent="Limits"]
+position = Vector2(82, 116)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Limits/BottomBorder"]
+position = Vector2(0, 15)
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limits/BottomBorder/StaticBody2D"]
+shape = SubResource("RectangleShape2D_aqqvd")
+
+[node name="Car_Root" parent="." instance=ExtResource("4_k8c7d")]
+position = Vector2(140, 35)
+direction = Vector2(-10, 0)
