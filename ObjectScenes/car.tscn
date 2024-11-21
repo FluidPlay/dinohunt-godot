@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://dyfy61vnvbpf5"]
+[gd_scene load_steps=10 format=3 uid="uid://dyfy61vnvbpf5"]
 
 [ext_resource type="Texture2D" uid="uid://cpros2ua1yn1e" path="res://Textures/car-atlas.png" id="1_d0sup"]
+[ext_resource type="Script" path="res://Scripts/TimedSelfDestruct.gd" id="1_hh66k"]
 [ext_resource type="Script" path="res://Scripts/automover.gd" id="1_wra5o"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_eln5a"]
@@ -41,16 +42,22 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fn070"]
 
-[node name="Car_Root" type="RigidBody2D"]
+[node name="Car_root" type="Node2D"]
+script = ExtResource("1_hh66k")
+time_to_destroy = 5.0
+
+[node name="Car_body" type="RigidBody2D" parent="."]
+collision_layer = 4
 gravity_scale = 0.0
+lock_rotation = true
 script = ExtResource("1_wra5o")
-direction = Vector2(-1, 0)
+direction = Vector2(-20, 0)
 relative_to_rotation = false
 
-[node name="Car" type="AnimatedSprite2D" parent="."]
+[node name="Car" type="AnimatedSprite2D" parent="Car_body"]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_a5atl")
 autoplay = "default"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Car_body"]
 shape = SubResource("RectangleShape2D_fn070")

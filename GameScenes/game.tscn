@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://ce4qu0mcf5j83"]
+[gd_scene load_steps=17 format=3 uid="uid://ce4qu0mcf5j83"]
 
 [ext_resource type="Texture2D" uid="uid://clqw6p4x5ss8" path="res://Textures/dino-game-bg.png" id="1_0nu2a"]
 [ext_resource type="Script" path="res://GameScenes/dino.gd" id="1_vgc7o"]
 [ext_resource type="Texture2D" uid="uid://bo1jlpkt8sn54" path="res://Textures/dino-atlas.png" id="2_qoh8m"]
 [ext_resource type="PackedScene" uid="uid://dyfy61vnvbpf5" path="res://ObjectScenes/car.tscn" id="4_k8c7d"]
+[ext_resource type="Script" path="res://Scripts/ObjectCreatorArea.gd" id="5_x88au"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3yf7k"]
 
@@ -63,11 +64,16 @@ size = Vector2(32, 120)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aqqvd"]
 size = Vector2(160, 30)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5xidl"]
+size = Vector2(12, 86)
+
 [node name="Root" type="Node2D"]
+metadata/_edit_vertical_guides_ = [160.0, 0.0]
 
 [node name="Dino_Root" type="CharacterBody2D" parent="."]
 position = Vector2(24, 55)
 collision_mask = 8
+motion_mode = 1
 script = ExtResource("1_vgc7o")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Dino_Root"]
@@ -138,6 +144,17 @@ collision_layer = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Limits/BottomBorder/StaticBody2D"]
 shape = SubResource("RectangleShape2D_aqqvd")
 
-[node name="Car_Root" parent="." instance=ExtResource("4_k8c7d")]
-position = Vector2(140, 35)
-direction = Vector2(-10, 0)
+[node name="CarSpawner" type="Area2D" parent="." node_paths=PackedStringArray("box_collider2d")]
+position = Vector2(173, 69)
+script = ExtResource("5_x88au")
+object_to_spawn = ExtResource("4_k8c7d")
+box_collider2d = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CarSpawner"]
+shape = SubResource("RectangleShape2D_5xidl")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+visible = false
+modulate = Color(1, 0.780392, 0.486275, 1)
+position = Vector2(80, 60)
+scale = Vector2(0.001, 0.001)

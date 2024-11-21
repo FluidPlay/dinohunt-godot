@@ -21,10 +21,10 @@ func _physics_process(_delta):
 # Draw an arrow to show the direction in which the object will move
 func _draw():
 	var extra_angle : float = rotation if relative_to_rotation else 0.0
-	draw_move_arrow(position, direction, extra_angle)
-
-# Custom function to draw the arrow (you would need to implement it)
-func draw_move_arrow(position: Vector2, direction: Vector2, extra_angle: float):
-	# Implement drawing functionality here (e.g., using draw_line or draw_polygon)
-	# This function draws the arrow indicating the movement direction, similar to OnDrawGizmosSelected
-	pass
+	#draw_move_arrow(position, direction, extra_angle)
+#
+## Custom function to draw the arrow (you would need to implement it)
+#func draw_move_arrow(position: Vector2, direction: Vector2, extra_angle: float):
+	## Implement drawing functionality here (e.g., using draw_line or draw_polygon)
+	## This function draws the arrow indicating the movement direction, similar to OnDrawGizmosSelected
+	#pass
