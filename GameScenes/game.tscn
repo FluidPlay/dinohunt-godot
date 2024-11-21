@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://ce4qu0mcf5j83"]
+[gd_scene load_steps=18 format=3 uid="uid://ce4qu0mcf5j83"]
 
 [ext_resource type="Texture2D" uid="uid://clqw6p4x5ss8" path="res://Textures/dino-game-bg.png" id="1_0nu2a"]
-[ext_resource type="Script" path="res://GameScenes/dino.gd" id="1_vgc7o"]
+[ext_resource type="Script" path="res://Scripts/Move.gd" id="1_lc3gh"]
 [ext_resource type="Texture2D" uid="uid://bo1jlpkt8sn54" path="res://Textures/dino-atlas.png" id="2_qoh8m"]
+[ext_resource type="Script" path="res://Scripts/HealthSystem.gd" id="3_x0t6v"]
 [ext_resource type="PackedScene" uid="uid://dyfy61vnvbpf5" path="res://ObjectScenes/car.tscn" id="4_k8c7d"]
 [ext_resource type="Script" path="res://Scripts/ObjectCreatorArea.gd" id="5_x88au"]
 
@@ -74,10 +75,14 @@ metadata/_edit_vertical_guides_ = [160.0, 0.0]
 position = Vector2(24, 55)
 collision_mask = 8
 motion_mode = 1
-script = ExtResource("1_vgc7o")
+script = ExtResource("1_lc3gh")
+SPEED = 120.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Dino_Root"]
 shape = SubResource("RectangleShape2D_3yf7k")
+
+[node name="HealthSystem" type="Node" parent="Dino_Root/CollisionShape2D"]
+script = ExtResource("3_x0t6v")
 
 [node name="Dino" type="AnimatedSprite2D" parent="Dino_Root"]
 texture_filter = 1
