@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://ce4qu0mcf5j83"]
+[gd_scene load_steps=30 format=3 uid="uid://ce4qu0mcf5j83"]
 
 [ext_resource type="Texture2D" uid="uid://clqw6p4x5ss8" path="res://Textures/dino-game-bg.png" id="1_0nu2a"]
 [ext_resource type="Script" path="res://Scripts/Move.gd" id="1_lc3gh"]
@@ -6,6 +6,16 @@
 [ext_resource type="Script" path="res://Scripts/HealthSystem.gd" id="3_x0t6v"]
 [ext_resource type="PackedScene" uid="uid://dyfy61vnvbpf5" path="res://ObjectScenes/car.tscn" id="4_k8c7d"]
 [ext_resource type="Script" path="res://Scripts/ObjectCreatorArea.gd" id="5_x88au"]
+[ext_resource type="Script" path="res://Scripts/AutoMove.gd" id="7_ebr4o"]
+[ext_resource type="Texture2D" uid="uid://cn1i776rhwye0" path="res://Textures/babydino-atlas.png" id="7_puuma"]
+[ext_resource type="FontFile" uid="uid://duttxqp08kjc2" path="res://Fonts/Dinofiles-6RR9Y.ttf" id="9_glk6c"]
+[ext_resource type="Script" path="res://Scripts/GameManager.gd" id="10_txpwg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_soua5"]
+size = Vector2(32, 120)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aqqvd"]
+size = Vector2(160, 30)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3yf7k"]
 
@@ -59,38 +69,64 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_soua5"]
-size = Vector2(32, 120)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_aqqvd"]
-size = Vector2(160, 30)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5xidl"]
 size = Vector2(12, 86)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_k6xhl"]
+atlas = ExtResource("7_puuma")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ok1v"]
+atlas = ExtResource("7_puuma")
+region = Rect2(17, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mmf7s"]
+atlas = ExtResource("7_puuma")
+region = Rect2(34, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7tggy"]
+atlas = ExtResource("7_puuma")
+region = Rect2(51, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7fccv"]
+atlas = ExtResource("7_puuma")
+region = Rect2(68, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xffqn"]
+atlas = ExtResource("7_puuma")
+region = Rect2(85, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i8vsb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k6xhl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ok1v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mmf7s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7tggy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7fccv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xffqn")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5hyon"]
+size = Vector2(19, 19)
+
 [node name="Root" type="Node2D"]
 metadata/_edit_vertical_guides_ = [160.0, 0.0]
-
-[node name="Dino_Root" type="CharacterBody2D" parent="."]
-position = Vector2(24, 55)
-collision_mask = 8
-motion_mode = 1
-script = ExtResource("1_lc3gh")
-SPEED = 120.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Dino_Root"]
-shape = SubResource("RectangleShape2D_3yf7k")
-
-[node name="HealthSystem" type="Node" parent="Dino_Root/CollisionShape2D"]
-script = ExtResource("3_x0t6v")
-
-[node name="Dino" type="AnimatedSprite2D" parent="Dino_Root"]
-texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_j2kcr")
-animation = &"walk"
-autoplay = "walk"
-frame = 3
-frame_progress = 0.381362
 
 [node name="BG_root" type="Node2D" parent="."]
 
@@ -149,6 +185,27 @@ collision_layer = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Limits/BottomBorder/StaticBody2D"]
 shape = SubResource("RectangleShape2D_aqqvd")
 
+[node name="Player" type="CharacterBody2D" parent="." groups=["Player"]]
+position = Vector2(24, 55)
+collision_mask = 8
+motion_mode = 1
+script = ExtResource("1_lc3gh")
+SPEED = 120.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("RectangleShape2D_3yf7k")
+
+[node name="Dino" type="AnimatedSprite2D" parent="Player"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_j2kcr")
+animation = &"walk"
+autoplay = "walk"
+frame = 3
+frame_progress = 0.381362
+
+[node name="HealthSystem" type="Node" parent="Player"]
+script = ExtResource("3_x0t6v")
+
 [node name="CarSpawner" type="Area2D" parent="." node_paths=PackedStringArray("box_collider2d")]
 position = Vector2(173, 69)
 script = ExtResource("5_x88au")
@@ -158,8 +215,73 @@ box_collider2d = NodePath("CollisionShape2D")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CarSpawner"]
 shape = SubResource("RectangleShape2D_5xidl")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-visible = false
-modulate = Color(1, 0.780392, 0.486275, 1)
-position = Vector2(80, 60)
-scale = Vector2(0.001, 0.001)
+[node name="BabyDino_Root" type="CharacterBody2D" parent="."]
+collision_layer = 2
+script = ExtResource("7_ebr4o")
+direction = Vector2(-15, 0)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BabyDino_Root"]
+texture_filter = 1
+position = Vector2(107, 43)
+sprite_frames = SubResource("SpriteFrames_i8vsb")
+animation = &"walk"
+autoplay = "walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BabyDino_Root"]
+position = Vector2(107, 43)
+shape = SubResource("RectangleShape2D_5hyon")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="P1Health_label" type="RichTextLabel" parent="CanvasLayer"]
+texture_filter = 1
+clip_contents = false
+custom_minimum_size = Vector2(48.335, 11.285)
+offset_left = 3.08328
+offset_top = 1.96209
+offset_right = 51.4183
+offset_bottom = 13.2471
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/default_color = Color(1, 0.753745, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/normal_font = ExtResource("9_glk6c")
+theme_override_font_sizes/normal_font_size = 10
+text = "Health: 3"
+autowrap_mode = 0
+
+[node name="P1Score_label" type="RichTextLabel" parent="CanvasLayer"]
+texture_filter = 1
+clip_contents = false
+custom_minimum_size = Vector2(18, 12)
+layout_direction = 2
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -50.8577
+offset_top = 3.36359
+offset_right = -2.52267
+offset_bottom = 15.3636
+grow_horizontal = 0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_colors/default_color = Color(1, 0.496614, 0.421781, 1)
+theme_override_constants/outline_size = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/normal_font = ExtResource("9_glk6c")
+theme_override_font_sizes/normal_font_size = 10
+text = "Score: 30"
+scroll_active = false
+autowrap_mode = 0
+text_direction = 2
+
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("P1Health_label", "P1Score_label")]
+unique_name_in_owner = true
+script = ExtResource("10_txpwg")
+P1Health_label = NodePath("../CanvasLayer/P1Health_label")
+P1Score_label = NodePath("../CanvasLayer/P1Score_label")

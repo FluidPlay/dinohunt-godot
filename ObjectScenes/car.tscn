@@ -50,25 +50,24 @@ size = Vector2(18, 18)
 script = ExtResource("1_hh66k")
 time_to_destroy = 5.0
 
-[node name="Car_body" type="RigidBody2D" parent="."]
+[node name="Car_body" type="CharacterBody2D" parent="."]
 collision_layer = 4
-gravity_scale = 0.0
-lock_rotation = true
 script = ExtResource("2_3ko7v")
 direction = Vector2(-20, 0)
-relative_to_rotation = false
 
 [node name="Car" type="AnimatedSprite2D" parent="Car_body"]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_a5atl")
 autoplay = "default"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Car_body"]
+[node name="Car_body_colshape2d" type="CollisionShape2D" parent="Car_body"]
+visible = false
 shape = SubResource("RectangleShape2D_fn070")
 
 [node name="ModifyHealth" type="Area2D" parent="Car_body"]
 script = ExtResource("4_4unth")
-destroy_when_activated = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Car_body/ModifyHealth"]
 shape = SubResource("RectangleShape2D_5ql5w")
+
+[connection signal="body_entered" from="Car_body/ModifyHealth" to="Car_body/ModifyHealth" method="_on_body_entered"]

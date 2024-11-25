@@ -1,4 +1,4 @@
-extends RigidBody2D
+extends CharacterBody2D
 
 # These are the forces that will push the object every frame
 # Don't forget they can be negative too!
@@ -7,16 +7,19 @@ extends RigidBody2D
 @export var kinematic: bool = true
 
 # Is the push relative or absolute to the world?
-@export var relative_to_rotation : bool = true
+@export var relative_to_rotation : bool = false
 
 # Called every physics frame
 func _physics_process(_delta):
 	if kinematic:
-		linear_velocity = direction * 2.0	
+		velocity = direction * 2.0	
 	if relative_to_rotation:
-		apply_impulse(Vector2(), direction * 2.0)  # Apply force relative to rotation
+		pass
+		#apply_impulse(Vector2(), direction * 2.0)  # Apply force relative to rotation
 	else:
-		apply_force(direction * 2.0)  # Apply force in world space
+		pass
+		#apply_force(direction * 2.0)  # Apply force in world space
+	move_and_slide()
 
 # Draw an arrow to show the direction in which the object will move
 func _draw():
