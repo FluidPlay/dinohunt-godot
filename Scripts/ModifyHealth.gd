@@ -6,9 +6,8 @@ extends Area2D
 
 # This function is called when the Area2D detects a collision
 func _on_body_entered(otherguy: Node2D) -> void:
-	# print("other: "+otherguy.name)
+	# If it didn't collide with a player, do nothing
 	if not otherguy.is_in_group("Player"):
-		print("not a player!")
 		pass
 	
 	otherguy.get_node("HealthSystem").on_try_modify_health.emit(health_change)
@@ -28,7 +27,8 @@ func _on_body_entered(otherguy: Node2D) -> void:
 	#	pass
 #	#health_script.modify_health(health_change)
 
-	# Optionally destroy this object after it activates
+	# Optionally destroys this object ('s parent) after it's done
 	if destroy_when_activated:
-		get_parent().queue_free()  # Equivalent to Destroy(gameObject) in Unity
+		get_parent().queue_free()
+			
 			
