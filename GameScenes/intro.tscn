@@ -1,0 +1,55 @@
+[gd_scene load_steps=6 format=3 uid="uid://cl4yque6d5oio"]
+
+[ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_hoi27"]
+[ext_resource type="PackedScene" uid="uid://ce4qu0mcf5j83" path="res://GameScenes/game.tscn" id="2_7b4p4"]
+[ext_resource type="Texture2D" uid="uid://cb0nl145vkpd6" path="res://Textures/DinoHunt_title.png" id="2_qbwke"]
+[ext_resource type="AudioStream" uid="uid://boa43m6swdb7y" path="res://Sounds/itty-bitty-8-bit-kevin-macleod-main-version-7983-03-13.mp3" id="3_ukcvi"]
+[ext_resource type="Script" path="res://Scripts/KeyShortcut.gd" id="4_nu8fu"]
+
+[node name="Root" type="Node2D"]
+metadata/_edit_vertical_guides_ = [160.0, 0.0]
+
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("P1Health_label", "P1Score_label")]
+unique_name_in_owner = true
+script = ExtResource("1_hoi27")
+P1Health_label = NodePath("")
+P1Score_label = NodePath("")
+intro_scene = null
+game_scene = ExtResource("2_7b4p4")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/CenterContainer"]
+texture = ExtResource("2_qbwke")
+centered = false
+
+[node name="StartButton" type="Button" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0.278431)
+custom_minimum_size = Vector2(120, 0)
+layout_direction = 2
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -28.9175
+offset_top = 35.8672
+offset_right = 28.9175
+offset_bottom = 43.8672
+grow_horizontal = 2
+script = ExtResource("4_nu8fu")
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="BG_Music" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("3_ukcvi")
+autoplay = true
+
+[connection signal="pressed" from="CanvasLayer/StartButton" to="GameManager" method="start_game"]

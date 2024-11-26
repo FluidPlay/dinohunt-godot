@@ -5,6 +5,8 @@ extends Area2D
 
 # Configure the spawning pattern
 @export var spawn_interval : float = 1.0
+@export var spawn_interval_mult : float = 1.0
+@export var spawn_interval_min : float = 0.25
 @export var box_collider2d : CollisionShape2D
 var timer : Timer
 
@@ -20,11 +22,9 @@ func _ready():
 
 # Waits for spawn_interval seconds before spawning
 func await_spawn_object():
-	# await get_tree().create_timer(1.0).timeout
 	timer.start()
 	await timer.timeout
 	spawn_object()
-	# timer.connect("timeout", self, "_on_timeout")
 
 # Actually spawn a new object
 func spawn_object():
@@ -42,5 +42,10 @@ func spawn_object():
 	# Add the new object as a child of the current node (or anywhere else you prefer)
 	get_parent().add_child(new_object)
 	
-	# Rinse and repeat
+	# Updates spawn interval, can't be lower than spawn_interval_min
+	var new_interval = spawn_interval * spawn_interval_mult 
+	spawn_interval = max(spawn_interval_min, new_interval)
+	timer.wait_time = spawn_interval
+	
+	# Rinse and repeat	
 	await_spawn_object()

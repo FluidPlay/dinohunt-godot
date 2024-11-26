@@ -11,9 +11,15 @@ config_version=5
 [application]
 
 config/name="DinoHunt-godot"
-run/main_scene="res://GameScenes/game.tscn"
+run/main_scene="res://GameScenes/intro.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
 config/icon="res://icon.svg"
+
+[autoload]
+
+SceneSwitcher="*res://scene_switcher.gd"
+Util="*res://Scripts/Util.gd"
+GameManager="*res://Scripts/GameManager.gd"
 
 [display]
 

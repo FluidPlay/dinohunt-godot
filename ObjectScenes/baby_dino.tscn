@@ -1,0 +1,87 @@
+[gd_scene load_steps=14 format=3 uid="uid://cso67h378e3rm"]
+
+[ext_resource type="Script" path="res://Scripts/AutoMove.gd" id="1_2snxn"]
+[ext_resource type="Texture2D" uid="uid://cn1i776rhwye0" path="res://Textures/babydino-atlas.png" id="2_xjmdh"]
+[ext_resource type="Script" path="res://Scripts/Collectable.gd" id="3_ryiup"]
+[ext_resource type="AudioStream" uid="uid://cei0rn0k31g3q" path="res://Sounds/FX/pickupCoin.wav" id="4_vtnbk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k6xhl"]
+atlas = ExtResource("2_xjmdh")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ok1v"]
+atlas = ExtResource("2_xjmdh")
+region = Rect2(17, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mmf7s"]
+atlas = ExtResource("2_xjmdh")
+region = Rect2(34, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7tggy"]
+atlas = ExtResource("2_xjmdh")
+region = Rect2(51, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7fccv"]
+atlas = ExtResource("2_xjmdh")
+region = Rect2(68, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xffqn"]
+atlas = ExtResource("2_xjmdh")
+region = Rect2(85, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i8vsb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k6xhl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ok1v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mmf7s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7tggy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7fccv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xffqn")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5hyon"]
+size = Vector2(19, 19)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ef1ys"]
+size = Vector2(22, 22)
+
+[node name="BabyDino_Root" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_2snxn")
+direction = Vector2(-15, 0)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_i8vsb")
+animation = &"walk"
+autoplay = "walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_5hyon")
+
+[node name="Collectable" type="Area2D" parent="." node_paths=PackedStringArray("collection_sound")]
+collision_layer = 2
+script = ExtResource("3_ryiup")
+collection_sound = NodePath("CollectionSound")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collectable"]
+shape = SubResource("RectangleShape2D_ef1ys")
+
+[node name="CollectionSound" type="AudioStreamPlayer2D" parent="Collectable"]
+stream = ExtResource("4_vtnbk")

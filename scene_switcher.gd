@@ -1,0 +1,21 @@
+extends Node
+
+var current_scene = null
+
+func _ready() -> void:
+	var root = get_tree().root
+	# Get first child scene from root
+	current_scene = root.get_child(root.get_child_count()-1)
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func switch_scene(resource_path):
+	call_deferred("_deferred_switch_scene", resource_path)
+	
+func _deferred_switch_scene(resource_path):
+	current_scene.free()
+	var scn = load(resource_path)
+	current_scene = scn.instantiate()
+	get_tree().root.add_child(current_scene)
+	get_tree().current_scene = current_scene
+	

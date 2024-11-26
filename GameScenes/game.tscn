@@ -1,17 +1,17 @@
-[gd_scene load_steps=33 format=3 uid="uid://ce4qu0mcf5j83"]
+[gd_scene load_steps=24 format=3 uid="uid://ce4qu0mcf5j83"]
 
 [ext_resource type="Texture2D" uid="uid://clqw6p4x5ss8" path="res://Textures/dino-game-bg.png" id="1_0nu2a"]
 [ext_resource type="Script" path="res://Scripts/Move.gd" id="1_lc3gh"]
+[ext_resource type="PackedScene" uid="uid://cl4yque6d5oio" path="res://GameScenes/intro.tscn" id="2_1bye3"]
 [ext_resource type="Texture2D" uid="uid://bo1jlpkt8sn54" path="res://Textures/dino-atlas.png" id="2_qoh8m"]
 [ext_resource type="Script" path="res://Scripts/HealthSystem.gd" id="3_x0t6v"]
 [ext_resource type="PackedScene" uid="uid://dyfy61vnvbpf5" path="res://ObjectScenes/car.tscn" id="4_k8c7d"]
 [ext_resource type="Script" path="res://Scripts/ObjectCreatorArea.gd" id="5_x88au"]
-[ext_resource type="Script" path="res://Scripts/AutoMove.gd" id="7_ebr4o"]
-[ext_resource type="Texture2D" uid="uid://cn1i776rhwye0" path="res://Textures/babydino-atlas.png" id="7_puuma"]
 [ext_resource type="FontFile" uid="uid://duttxqp08kjc2" path="res://Fonts/Dinofiles-6RR9Y.ttf" id="9_glk6c"]
-[ext_resource type="Script" path="res://Scripts/Collectable.gd" id="9_tf01e"]
+[ext_resource type="PackedScene" uid="uid://cso67h378e3rm" path="res://ObjectScenes/baby_dino.tscn" id="10_asg6n"]
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="10_txpwg"]
-[ext_resource type="AudioStream" uid="uid://cei0rn0k31g3q" path="res://Sounds/FX/pickupCoin.wav" id="10_x7qxb"]
+[ext_resource type="AudioStream" uid="uid://baj2yq0dtiwl4" path="res://Sounds/bit-shift-kevin-macleod-main-version-24901-03-12.mp3" id="13_k5dud"]
+[ext_resource type="AudioStream" uid="uid://b7ll071me43i2" path="res://Sounds/FX/death-scream.mp3" id="15_t7g7f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_soua5"]
 size = Vector2(32, 120)
@@ -74,64 +74,16 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5xidl"]
 size = Vector2(12, 86)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_k6xhl"]
-atlas = ExtResource("7_puuma")
-region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3ok1v"]
-atlas = ExtResource("7_puuma")
-region = Rect2(17, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mmf7s"]
-atlas = ExtResource("7_puuma")
-region = Rect2(34, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7tggy"]
-atlas = ExtResource("7_puuma")
-region = Rect2(51, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7fccv"]
-atlas = ExtResource("7_puuma")
-region = Rect2(68, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xffqn"]
-atlas = ExtResource("7_puuma")
-region = Rect2(85, 0, 16, 16)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_i8vsb"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_k6xhl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3ok1v")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mmf7s")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7tggy")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7fccv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xffqn")
-}],
-"loop": true,
-"name": &"walk",
-"speed": 10.0
-}]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5hyon"]
-size = Vector2(19, 19)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ef1ys"]
-size = Vector2(22, 22)
-
 [node name="Root" type="Node2D"]
 metadata/_edit_vertical_guides_ = [160.0, 0.0]
+
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("P1Health_label", "P1Score_label")]
+unique_name_in_owner = true
+script = ExtResource("10_txpwg")
+P1Health_label = NodePath("../CanvasLayer/P1Health_label")
+P1Score_label = NodePath("../CanvasLayer/P1Score_label")
+intro_scene = ExtResource("2_1bye3")
+game_scene = null
 
 [node name="BG_root" type="Node2D" parent="."]
 
@@ -191,6 +143,7 @@ collision_layer = 8
 shape = SubResource("RectangleShape2D_aqqvd")
 
 [node name="Player" type="CharacterBody2D" parent="." groups=["Player"]]
+process_mode = 1
 position = Vector2(24, 55)
 collision_mask = 8
 motion_mode = 1
@@ -208,8 +161,15 @@ frame_progress = 0.381362
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 shape = SubResource("RectangleShape2D_3yf7k")
 
-[node name="HealthSystem" type="Node" parent="Player"]
+[node name="HealthSystem" type="Node" parent="Player" node_paths=PackedStringArray("death_sound_stream")]
 script = ExtResource("3_x0t6v")
+death_sound_stream = NodePath("../DeathSound")
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="Player"]
+position = Vector2(-24, -55)
+stream = ExtResource("15_t7g7f")
+volume_db = 7.703
+pitch_scale = 0.98
 
 [node name="CarSpawner" type="Area2D" parent="." node_paths=PackedStringArray("box_collider2d")]
 position = Vector2(173, 69)
@@ -220,32 +180,14 @@ box_collider2d = NodePath("CollisionShape2D")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CarSpawner"]
 shape = SubResource("RectangleShape2D_5xidl")
 
-[node name="BabyDino_Root" type="CharacterBody2D" parent="."]
-collision_layer = 2
-script = ExtResource("7_ebr4o")
-direction = Vector2(-15, 0)
+[node name="BabyDinoSpawner" type="Area2D" parent="." node_paths=PackedStringArray("box_collider2d")]
+position = Vector2(173, 69)
+script = ExtResource("5_x88au")
+object_to_spawn = ExtResource("10_asg6n")
+box_collider2d = NodePath("CollisionShape2D")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BabyDino_Root"]
-texture_filter = 1
-position = Vector2(107, 43)
-sprite_frames = SubResource("SpriteFrames_i8vsb")
-animation = &"walk"
-autoplay = "walk"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BabyDino_Root"]
-position = Vector2(107, 43)
-shape = SubResource("RectangleShape2D_5hyon")
-
-[node name="Collectable" type="Area2D" parent="BabyDino_Root"]
-collision_layer = 2
-script = ExtResource("9_tf01e")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BabyDino_Root/Collectable"]
-position = Vector2(107, 43)
-shape = SubResource("RectangleShape2D_ef1ys")
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="BabyDino_Root/Collectable"]
-stream = ExtResource("10_x7qxb")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BabyDinoSpawner"]
+shape = SubResource("RectangleShape2D_5xidl")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -296,8 +238,13 @@ scroll_active = false
 autowrap_mode = 0
 text_direction = 2
 
-[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("P1Health_label", "P1Score_label")]
-unique_name_in_owner = true
-script = ExtResource("10_txpwg")
-P1Health_label = NodePath("../CanvasLayer/P1Health_label")
-P1Score_label = NodePath("../CanvasLayer/P1Score_label")
+[node name="Sounds" type="Node" parent="."]
+
+[node name="BG_Music" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("13_k5dud")
+volume_db = -8.0
+autoplay = true
+
+[node name="Death_Scream" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("15_t7g7f")
+pitch_scale = 1.2
