@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://ce4qu0mcf5j83"]
+[gd_scene load_steps=33 format=3 uid="uid://ce4qu0mcf5j83"]
 
 [ext_resource type="Texture2D" uid="uid://clqw6p4x5ss8" path="res://Textures/dino-game-bg.png" id="1_0nu2a"]
 [ext_resource type="Script" path="res://Scripts/Move.gd" id="1_lc3gh"]
@@ -11,6 +11,7 @@
 [ext_resource type="FontFile" uid="uid://duttxqp08kjc2" path="res://Fonts/Dinofiles-6RR9Y.ttf" id="9_glk6c"]
 [ext_resource type="Script" path="res://Scripts/Collectable.gd" id="9_tf01e"]
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="10_txpwg"]
+[ext_resource type="AudioStream" uid="uid://cei0rn0k31g3q" path="res://Sounds/FX/pickupCoin.wav" id="10_x7qxb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_soua5"]
 size = Vector2(32, 120)
@@ -244,6 +245,9 @@ position = Vector2(107, 43)
 shape = SubResource("RectangleShape2D_ef1ys")
 
 [node name="Collectable" type="Node" parent="BabyDino_Root/Area2D"]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="BabyDino_Root/Area2D"]
+stream = ExtResource("10_x7qxb")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

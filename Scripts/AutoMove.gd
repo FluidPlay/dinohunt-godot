@@ -23,7 +23,7 @@ func _physics_process(_delta):
 
 # Draw an arrow to show the direction in which the object will move
 func _draw():
-	var extra_angle : float = rotation if relative_to_rotation else 0.0
+	var _extra_angle : float = rotation if relative_to_rotation else 0.0
 	#draw_move_arrow(position, direction, extra_angle)
 #
 ## Custom function to draw the arrow (you would need to implement it)
