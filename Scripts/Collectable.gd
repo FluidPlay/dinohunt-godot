@@ -3,13 +3,16 @@ extends Area2D
 # Variables
 @export var points_to_add : int = 1
 @onready var game_manager: Node = %GameManager
-#@onready var audio_stream_player = $AudioStreamPlayer2D                                                                                                                                                          
+#@onready var audio_stream_player = $AudioStreamPlayer2D   
+
+# That one is optional, we use get_node_or_null to prevent warnings when null                                                                                                                                                       
 @onready var audio_stream_player := get_node_or_null("AudioStreamPlayer2D") as AudioStreamPlayer2D
 var player_number = -1
 var was_collected:bool = false
 
-#func _on_ready() -> void:
-	#audio_stream_player = $AudioStreamPlayer2D
+## Connect Signal through code instead of using the 'Node' panel
+func _ready() -> void:
+	self.body_entered.connect(_on_body_entered)
 	
 # This function is called when the Area2D detects a collision
 func _on_body_entered(otherguy: Node2D) -> void:
@@ -36,10 +39,7 @@ func _on_body_entered(otherguy: Node2D) -> void:
 	root.hide()
 		
 	if audio_stream_player != null:
-		print("trying to play audio stream")
 		audio_stream_player.play()
-	else:
-		print("AudioStreamPlayer2D not found")
 		
 	await audio_stream_player.finished	
 

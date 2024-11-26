@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://dyfy61vnvbpf5"]
+[gd_scene load_steps=13 format=3 uid="uid://dyfy61vnvbpf5"]
 
 [ext_resource type="Texture2D" uid="uid://cpros2ua1yn1e" path="res://Textures/car-atlas.png" id="1_d0sup"]
 [ext_resource type="Script" path="res://Scripts/TimedSelfDestruct.gd" id="1_hh66k"]
 [ext_resource type="Script" path="res://Scripts/AutoMove.gd" id="2_3ko7v"]
 [ext_resource type="Script" path="res://Scripts/ModifyHealth.gd" id="4_4unth"]
+[ext_resource type="AudioStream" uid="uid://cg1ytq7xjo3sm" path="res://Sounds/FX/hitHurt.wav" id="5_8ix1x"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_eln5a"]
 atlas = ExtResource("1_d0sup")
@@ -70,4 +71,5 @@ script = ExtResource("4_4unth")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Car_body/ModifyHealth"]
 shape = SubResource("RectangleShape2D_5ql5w")
 
-[connection signal="body_entered" from="Car_body/ModifyHealth" to="Car_body/ModifyHealth" method="_on_body_entered"]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Car_body/ModifyHealth"]
+stream = ExtResource("5_8ix1x")

@@ -236,17 +236,15 @@ autoplay = "walk"
 position = Vector2(107, 43)
 shape = SubResource("RectangleShape2D_5hyon")
 
-[node name="Area2D" type="Area2D" parent="BabyDino_Root"]
+[node name="Collectable" type="Area2D" parent="BabyDino_Root"]
 collision_layer = 2
 script = ExtResource("9_tf01e")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BabyDino_Root/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BabyDino_Root/Collectable"]
 position = Vector2(107, 43)
 shape = SubResource("RectangleShape2D_ef1ys")
 
-[node name="Collectable" type="Node" parent="BabyDino_Root/Area2D"]
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="BabyDino_Root/Area2D"]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="BabyDino_Root/Collectable"]
 stream = ExtResource("10_x7qxb")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -303,5 +301,3 @@ unique_name_in_owner = true
 script = ExtResource("10_txpwg")
 P1Health_label = NodePath("../CanvasLayer/P1Health_label")
 P1Score_label = NodePath("../CanvasLayer/P1Score_label")
-
-[connection signal="body_entered" from="BabyDino_Root/Area2D" to="BabyDino_Root/Area2D" method="_on_body_entered"]
