@@ -1,8 +1,7 @@
-[gd_scene load_steps=24 format=3 uid="uid://ce4qu0mcf5j83"]
+[gd_scene load_steps=23 format=3 uid="uid://ce4qu0mcf5j83"]
 
 [ext_resource type="Texture2D" uid="uid://clqw6p4x5ss8" path="res://Textures/dino-game-bg.png" id="1_0nu2a"]
 [ext_resource type="Script" path="res://Scripts/Move.gd" id="1_lc3gh"]
-[ext_resource type="PackedScene" uid="uid://cl4yque6d5oio" path="res://GameScenes/intro.tscn" id="2_1bye3"]
 [ext_resource type="Texture2D" uid="uid://bo1jlpkt8sn54" path="res://Textures/dino-atlas.png" id="2_qoh8m"]
 [ext_resource type="Script" path="res://Scripts/HealthSystem.gd" id="3_x0t6v"]
 [ext_resource type="PackedScene" uid="uid://dyfy61vnvbpf5" path="res://ObjectScenes/car.tscn" id="4_k8c7d"]
@@ -82,8 +81,6 @@ unique_name_in_owner = true
 script = ExtResource("10_txpwg")
 P1Health_label = NodePath("../CanvasLayer/P1Health_label")
 P1Score_label = NodePath("../CanvasLayer/P1Score_label")
-intro_scene = ExtResource("2_1bye3")
-game_scene = null
 
 [node name="BG_root" type="Node2D" parent="."]
 
@@ -175,6 +172,8 @@ pitch_scale = 0.98
 position = Vector2(173, 69)
 script = ExtResource("5_x88au")
 object_to_spawn = ExtResource("4_k8c7d")
+spawn_interval = 1.5
+spawn_interval_mult = 0.97
 box_collider2d = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CarSpawner"]

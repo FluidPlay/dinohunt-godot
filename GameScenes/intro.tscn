@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://cl4yque6d5oio"]
+[gd_scene load_steps=5 format=3 uid="uid://cl4yque6d5oio"]
 
 [ext_resource type="Script" path="res://Scripts/LoadScene.gd" id="1_dffdq"]
-[ext_resource type="PackedScene" uid="uid://ce4qu0mcf5j83" path="res://GameScenes/game.tscn" id="2_c8pv0"]
 [ext_resource type="Texture2D" uid="uid://cb0nl145vkpd6" path="res://Textures/DinoHunt_title.png" id="2_qbwke"]
 [ext_resource type="AudioStream" uid="uid://boa43m6swdb7y" path="res://Sounds/itty-bitty-8-bit-kevin-macleod-main-version-7983-03-13.mp3" id="3_ukcvi"]
 [ext_resource type="Script" path="res://Scripts/KeyShortcut.gd" id="4_nu8fu"]
@@ -11,7 +10,6 @@ metadata/_edit_vertical_guides_ = [160.0, 0.0]
 
 [node name="Load Game" type="Node" parent="."]
 script = ExtResource("1_dffdq")
-scene_to_load = ExtResource("2_c8pv0")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
