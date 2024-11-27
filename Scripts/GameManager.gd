@@ -20,7 +20,7 @@ enum reload_scene_options { intro_scene, game_scene }
 var P1Score:int = 0
 var P2Score:int = 0
 
-var instance:GameManager
+var instance = self
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -47,7 +47,8 @@ func death():
 	var next_scene = intro_scene if reload_scene_on_death == reload_scene_options.intro_scene \
 								 else game_scene
 
-	load_scene.call_deferred(next_scene)
+	#load_scene.call_deferred(next_scene)
+	load_scene(next_scene)
 	get_tree().paused = false
 	
 func load_scene(next_scene):
