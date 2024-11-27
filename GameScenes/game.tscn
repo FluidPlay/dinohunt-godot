@@ -77,7 +77,6 @@ size = Vector2(12, 86)
 metadata/_edit_vertical_guides_ = [160.0, 0.0]
 
 [node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("P1Health_label", "P1Score_label")]
-unique_name_in_owner = true
 script = ExtResource("10_txpwg")
 P1Health_label = NodePath("../CanvasLayer/P1Health_label")
 P1Score_label = NodePath("../CanvasLayer/P1Score_label")
